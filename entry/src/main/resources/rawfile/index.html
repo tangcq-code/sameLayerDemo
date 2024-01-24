@@ -1,0 +1,93 @@
+<!Document>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>同层渲染测试html</title>
+</head>
+<style>
+    .error { color: red; }
+    a {
+      font-size: 40px;
+    }
+    label, input {
+      font-size: 40px;
+      width: 200px;
+    }
+</style>
+<body>
+<div>
+    <div id="bodyId">
+        <form name="myForm" onsubmit="return validateForm()" method="post">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">电子邮件：</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="message">留言：</label><br>
+            <textarea id="message" name="message" rows="5" cols="40" required></textarea><br><br>
+
+            <label for="phone">电话号码：</label>
+            <input type="text" id="phone" name="phone" required><br><br>
+
+            <input type="submit" value="提交">
+        </form>
+        <div id="error-message"></div>
+        <embed id="cameraTest" type="native/camera" width="900" height="1050" src="test" style="background-color:red"/>
+        <br>
+        <h1>同层渲染测试</h1>
+        <br>
+        <embed id="cameraTest1" type="native/camera" width="900" height="1050" src="test" style="background-color:red"/>
+    </div>
+</div>
+</div>
+<div id="bottom" width="500" height="200">
+    <br>
+    <a href="www.baidu.com">页面跳转</a>
+    <br>
+</div>
+
+<script>
+    function validateForm() {
+      var name = document.forms["myForm"]["name"].value;
+      var email = document.forms["myForm"]["email"].value;
+      var message = document.forms["myForm"]["message"].value;
+      var phone = document.forms["myForm"]["phone"].value;
+      var errorMessage = "";
+
+      if (name == "") {
+        errorMessage += "<p class='error'>请输入姓名。</p>";
+      }
+      if (email == "") {
+        errorMessage += "<p class='error'>请输入电子邮件。</p>";
+      } else if (!isValidEmail(email)) {
+        errorMessage += "<p class='error'>请输入有效的电子邮件地址。</p>";
+      }
+      if (message == "") {
+        errorMessage += "<p class='error'>请输入留言。</p>";
+      }
+      if (phone == "") {
+        errorMessage += "<p class='error'>请输入电话号码。</p>";
+      } else if (!isValidPhone(phone)) {
+        errorMessage += "<p class='error'>请输入有效的电话号码。</p>";
+      }
+
+      if (errorMessage != "") {
+        document.getElementById("error-message").innerHTML = errorMessage;
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function isValidEmail(email) {
+      var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return pattern.test(email);
+    }
+
+    function isValidPhone(phone) {
+      var pattern = /^\d{10}$/;
+      return pattern.test(phone);
+    }
+</script>
+</body>
+</html>
